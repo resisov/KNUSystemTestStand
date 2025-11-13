@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+rm COMMAND_MON_STOP 2>/dev/null
+rm COMMAND_MON_QUIT 2>/dev/null
+
+while [ ! -e "COMMAND_MON_QUIT"  ] ;
+do
+    echo  "Waiting for COMMAND_MON_START. Or excute ./cmd_mon_quit to exit"
+    sleep 2
+
+
+    if [ -e "COMMAND_MON_START" ] ; then
+       rm COMMAND_MON_START
+       root -n -q -l DaqMonitor.C 
+    fi
+
+done
+
+
+echo
+echo "Bye. "
+echo

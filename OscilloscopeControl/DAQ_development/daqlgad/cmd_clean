@@ -1,0 +1,4 @@
+rm COMMAND*
+rm tek.root
+rm Tek.run.time.end
+rm Tek.run.time.start

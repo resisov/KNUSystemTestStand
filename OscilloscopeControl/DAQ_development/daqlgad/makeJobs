@@ -1,0 +1,12 @@
+#!/bin/bash
+
+JOBDIR=jobdir-01
+
+rm -rf ${JOBDIR} 
+mkdir ${JOBDIR} 
+
+for vol in -140 -160 -180 -200 -220 -240 -260
+do
+   vi +"1,% s/VOLTAGE/${vol}/g" +"wq! ${JOBDIR}/Tek.run.config.${vol}"  template.Tek.run.config
+done
+

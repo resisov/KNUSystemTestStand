@@ -1,0 +1,7 @@
+python3 oscilloscope_control_v0_17_Sr90.py --scan True --scan_start -240 --scan_stop -240 --output_dir output/LF_PreIrrad_Sr90_glich_80uV_2mV_200Mhz_with_foil_JPT/   --nEvents 1000 > 200MHz_-140_JPT.txt
+#python3 oscilloscope_control_v0_17_Sr90.py --scan True --scan_start -160 --scan_stop -160 --output_dir output/LF_PreIrrad_Sr90_glich_80uV_2mV_200Mhz_with_foil_JPT/   --nEvents 1000 > 250MHz_-160.txt
+#python3 oscilloscope_control_v0_17_Sr90.py --scan True --scan_start -180 --scan_stop -180 --output_dir output/LF_PreIrrad_Sr90_glich_80uV_2mV_200Mhz_with_foil_JPT/   --nEvents 1000 > 250MHz_-180.txt
+#python3 oscilloscope_control_v0_17_Sr90.py --scan True --scan_start -200 --scan_stop -200 --output_dir output/LF_PreIrrad_Sr90_glich_80uV_2mV_200Mhz_with_foil_JPT/   --nEvents 1000 > 250MHz_-200.txt
+#python3 oscilloscope_control_v0_17_Sr90.py --scan True --scan_start -220 --scan_stop -220 --output_dir output/LF_PreIrrad_Sr90_glich_80uV_2mV_200Mhz_with_foil_JPT/   --nEvents 1000 > 250MHz_-220.txt
+#python3 oscilloscope_control_v0_17_Sr90.py --scan True --scan_start -240 --scan_stop -240 --output_dir output/LF_PreIrrad_Sr90_glich_80uV_2mV_200Mhz_with_foil_JPT/   --nEvents 1000 > 250MHz_-240.txt
+#python3 oscilloscope_control_v0_17_Sr90.py --scan True --scan_start -260 --scan_stop -260 --output_dir output/LF_PreIrrad_Sr90_glich_80uV_2mV_200Mhz_with_foil_JPT/   --nEvents 1000 > 250MHz_-260.txtpython3 oscilloscope_control_v0_17_Sr90.py --scan True --scan_start -140 --scan_stop -140 --output_dir output/LF_PreIrrad_Sr90_glich_80uV_2mV_2

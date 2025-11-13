@@ -1,0 +1,21 @@
+
+
+JOBDIR=jobdir-01
+
+for vol in -140 -160 -180 -200 -220 -240 -260
+do
+
+  cp ${JOBDIR}/Tek.run.config.${vol} Tek.run.config
+  echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+  echo ">>>"
+  echo ">>>  Setting bias voltage : ${vol} V"
+  echo ">>>"
+  echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
+  ./genEvent 
+
+done
+
+./cmd_mon_quit
+sleep 1
+rm COMMAND_* 2>/dev/null

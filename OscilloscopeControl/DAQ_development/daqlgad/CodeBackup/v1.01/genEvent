@@ -1,0 +1,51 @@
+#!/bin/bash
+# run_tmp_dir : BUFFER
+rm -fdr BUFFER  2>/dev/null
+rm COMMAND_* 2>/dev/null
+
+#
+#
+
+echo "daqstart | " `date +%F-%T` > Tek.run.time.start
+
+mkdir BUFFER 
+mkdir BUFFER/sav
+
+touch COMMAND_DAQ_START
+
+./cmd_mon_start
+
+
+#for i in `seq 10001 10020`
+for i in `seq --format="%05.0f"  00001 00020`
+do	
+
+    if [ -e "COMMAND_DAQ_TERMINATE" ] ; then
+       rm COMMAND_DAQ_TERMINATE
+       echo ">>> DAQ Terminated ..... " 
+       break
+    fi
+
+    sleep 1 
+
+    cp ../BUFFER/data_$i.txt  BUFFER 
+    cp ../BUFFER/data_$i.txt  BUFFER/sav
+    echo data_$i.txt produced
+
+done
+
+echo "daqend   | " `date +%F-%T` > Tek.run.time.end
+
+touch COMMAND_DAQ_FINISH
+
+
+root -b -n -q -l WaveToTree.C
+
+./cmd_mon_stop
+
+echo
+
+sleep 2
+rm COMMAND_* 2>/dev/null
+
+

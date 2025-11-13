@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# BACKUP=CodeBackup/v1.00
+
+BACKUP=$1
+
+if [ ! -d ${BACKUP} ] ; then 
+
+   mkdir ${BACKUP}
+
+   for file in \
+               BufferRead.h           \
+               lgadTree.h             \
+               RunConfig.h            \
+               WaveToTree.C           \
+               DaqMonitor.C           \
+               Tek.run.config         \
+               Tek.runNumber.previous \
+               cmd_clean              \
+               cmd_daq_terminate      \
+               cmd_mon_pause          \
+               cmd_mon_quit           \
+               cmd_mon_start          \
+               cmd_mon_stop           \
+               genEvent               \
+               jobdir-01              \
+               mon                    \
+               run                    \
+               template.Tek.run.config\
+               makeJobs               \
+               runJobs                \
+               prodEvent
+   do
+
+     cp -r ${file} ${BACKUP}
+   
+   done
+
+else
+
+   echo
+   echo "---> " ${BACKUP} already exists. 
+   echo
+
+fi
+
