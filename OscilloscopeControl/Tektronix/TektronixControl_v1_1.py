@@ -102,7 +102,7 @@ class Tektronix:
         tstop = tstart1 + total_time  # Time stop
         scaled_time = np.linspace(tstart1, tstop, record_length)  # Scaled time array
         scaled_waveform = (np.array(bin_wave1, dtype='double') - vpos1) * vscale1 + voff1  # Scaled waveform data
-        dqmDraw(1, scaled_time, scaled_waveform)  # Draw waveform for channel 1
+        #dqmDraw(1, scaled_time, scaled_waveform)  # Draw waveform for channel 1
 
     def acquisition(self, nEvents):
         print(f'Horizontal window: {horizontalwindow} sec', f'Trigger channel: {trigger_channel}', f'Trigger level: {trigger_level} V')
@@ -148,7 +148,7 @@ class Tektronix:
                 data[f'ch{ch}_ped_rms'] = ak.Array([pedestal_rms])
 
                 # calculating collected charge
-                collected_charge = (integral - (pedestal_total * (x[1] - x[0]))) * 1e15 / 5000 # in fC
+                collected_charge = (integral - (pedestal_total * (x[1] - x[0]))) * 1e15 / 50 # in fC
                 data[f'ch{ch}_collected_charge'] = ak.Array([collected_charge])
 
                 # waveform fitting with gaussian
@@ -228,8 +228,8 @@ class Tektronix:
 parser = argparse.ArgumentParser(description='Oscilloscope control')
 parser.add_argument('--nEvents', type=int, default=10, help='Number of events to acquire')
 parser.add_argument('--horizontalwindow', type=float, default=10e-10, help='Horizontal window')
-parser.add_argument('--trigger_channel', type=int, default=2, help='Trigger channel')
-parser.add_argument('--trigger_level', type=float, default=-0.0800, help='Trigger level')
+parser.add_argument('--trigger_channel', type=int, default=1, help='Trigger channel')
+parser.add_argument('--trigger_level', type=float, default=-0.400, help='Trigger level')
 parser.add_argument('--output_dir', type=str, default='/home/knutimingdaq01/Desktop/KNUSystemTestStand/OscilloscopeControl/output/', help='Output directory')
 parser.add_argument('--output', type=str, default='waveforms_merged.root', help='Output name')
 parser.add_argument('--scan', type=str, default='False', help='Scan mode (True/False)')
@@ -241,7 +241,7 @@ args = parser.parse_args()
 start_time = time.time()
 
 # default settings
-resource_name = 'TCPIP::192.168.0.2::INSTR' ## 내부망 IP 주소 (사전 정의됨. 바꾸지 마시오.)
+resource_name = 'TCPIP::192.168.100.2::INSTR' ## 내부망 IP 주소 (사전 정의됨. 바꾸지 마시오.)
 horizontalwindow = args.horizontalwindow
 trigger_channel = args.trigger_channel
 trigger_level = args.trigger_level
@@ -275,11 +275,11 @@ if __name__ == '__main__':
             ## Save the output file with the scan value
             output_file = f'{args.output_dir}waveforms_scan_{int(abs(i))}.root'
             os.rename(f'{args.output_dir}{args.output}', output_file)
-            keithely.adjust_voltage(-10)
+            keithley.adjust_voltage(-10)
             time.sleep(0.5)
         # Reset the voltage to 0V after the scan
         print('Scan completed. Resetting voltage to 0V.')
-        keithely.reset_voltage()  # Reset the voltage to 0V after the scan
+        keithley.reset_voltage()  # Reset the voltage to 0V after the scan
 
     # End time
     print('File saved on "output/" directory')

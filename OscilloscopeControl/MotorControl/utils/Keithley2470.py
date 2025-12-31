@@ -5,7 +5,7 @@ import sys, os
 class Keithley:
     def __init__(self):
         self.rm = pyvisa.ResourceManager()
-        self.smu = self.rm.open_resource('TCPIP0::192.168.100.101')
+        self.smu = self.rm.open_resource('TCPIP0::192.168.0.3')
         ## Confirm connection
         print(self.smu.query('*IDN?'))
         ## Set termination characters

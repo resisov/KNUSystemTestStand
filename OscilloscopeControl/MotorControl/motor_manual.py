@@ -14,9 +14,9 @@ import mplhep as hep
 
 
 # Device URI
-device_uri3 = "xi-com:/dev/ttyACM0"  # Y
-device_uri2 = "xi-com:/dev/ttyACM1"  # X
-device_uri1 = "xi-com:/dev/ttyACM2"  # Z
+device_uri3 = "xi-com:/dev/ttyACM1"  # X 
+device_uri2 = "xi-com:/dev/ttyACM2"  # X
+device_uri1 = "xi-com:/dev/ttyACM0"  # Y
 # Axis 객체
 z_axis = ximc.Axis(device_uri1)
 x_axis = ximc.Axis(device_uri2)

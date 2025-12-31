@@ -12,6 +12,43 @@ import matplotlib.pyplot as plt
 import mplhep as hep
 import pyvisa
 
+def xyz_scan(x_axis, y_axis, z_axis, x_start, x_end, y_start, y_end, z_start, z_end, step_size, scope):
+    peak_array = np.zeros((int((x_end - x_start) / step_size) + 1, int((y_end - y_start) / step_size) + 1, int((z_end - z_start) / step_size) + 1))
+    charge_array = np.zeros((int((x_end - x_start) / step_size) + 1, int((y_end - y_start) / step_size) + 1, int((z_end - z_start) / step_size) + 1))
+    for z in range(z_start, z_end + 1, step_size):
+        z_axis.command_move(-z, 0)
+        z_axis.command_wait_for_stop(10)
+        for y in range(y_start, y_end + 1, step_size):
+            y_axis.command_move(y, 0)
+            y_axis.command_wait_for_stop(10)
+            for x in range(x_start, x_end + 1, step_size):
+                x_axis.command_move(-x, 0)
+                x_axis.command_wait_for_stop(10)
+
+                peak, charge = 0, 0
+                for i in range(10):
+                    peak_try, charge_try = scope.scan()  # Get the peak value from the oscilloscope\
+                    print(peak_try, charge_try)
+                    peak += peak_try
+                    charge += charge_try
+                peak /= 10
+                charge /= 10
+                print(peak, charge)
+                ### pulse peak measurement###
+                peak_array[int((x - x_start) / step_size), int((y - y_start) / step_size), int((z - z_start) / step_size)] = peak
+                charge_array[int((x - x_start) / step_size), int((y - y_start) / step_size), int((z - z_start) / step_size)] = charge
+                print(f"Current position: X: {x_axis.get_position().Position}, Y: {y_axis.get_position().Position}, Z: {z_axis.get_position().Position}, pulse peak: {peak}, charge: {charge}")
+    time.sleep(1)  # Wait for the motors to stop
+    z_axis.command_move(0, 0)
+    y_axis.command_move(0, 0)
+    x_axis.command_move(0, 0)
+    z_axis.command_wait_for_stop(10)
+    y_axis.command_wait_for_stop(10)
+    x_axis.command_wait_for_stop(10)
+    np.save('xyz_peak.npy', peak_array)
+    np.save('xyz_charge.npy', charge_array)
+
+
 def yz_scan(y_axis, z_axis, y_start, y_end, z_start, z_end, step_size, scope):
     peak_array = np.zeros((int((y_end - y_start) / step_size) + 1, int((z_end - z_start) / step_size) + 1))
     charge_array = np.zeros((int((y_end - y_start) / step_size) + 1, int((z_end - z_start) / step_size) + 1))
@@ -313,8 +350,8 @@ if __name__ == '__main__':
     #scan_range = int(500 * 1.2)
 
     # XY 스캔 실행
-    xy_scan(x_axis, y_axis, -20, 20, -20, 20, 2,scope)
-
+    #xy_scan(x_axis, y_axis, -20, 20, -20, 20, 2,scope)
+    xyz_scan(x_axis, y_axis, z_axis, -15, 15, -15, 15, -15, 15, 5, scope)
 
     # Device 닫기
     x_axis.close_device()
